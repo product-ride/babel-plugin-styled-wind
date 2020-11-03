@@ -6,7 +6,7 @@ This plugin is a highly recommended supplement to the base [styled-wind](https:/
 - Supports all features of [styled-wind](https://github.com/product-ride/styled-wind), but with no additional bundle size
 - It works independently and doesnt require installing `styled-wind`
 
-Please note: For testing/playing around the tool, use the actual library. Use the `babel-pligin-styled-wind` only for production to avoid unnecssary configurations. 
+**Note:** For testing/playing around the tool, use the actual library. Use the `babel-pligin-styled-wind` only for production to avoid unnecssary configurations. If you are using `create-react-app`, you should `eject` before using it. 
 
 ## Quick start
 
