@@ -10,8 +10,6 @@ try {
 }
 
 export const getHydratedTemplateString = (strings) => {
-    console.log("custom", customConfig);
-  
     const config = generateStylesJS(customConfig);
     const cssGen = new CSSGen(config);
     const sanitizedStyles = strings.map((stringsPart) => {

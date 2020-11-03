@@ -1,5 +1,5 @@
 {
-  "version": "0.0.1",
+  "version": "0.0.2",
   "name": "babel-plugin-styled-wind",
   "description": "Reduce build size and enable simple migration from styled-components with additional babel config",
   "repository": "https://github.com/product-ride/babel-plugin-styled-wind",
