@@ -1,0 +1,64 @@
+{
+  "version": "0.0.10",
+  "name": "babel-plugin-styled-wind",
+  "description": "Reduce build size and enable simple migration from styled-components with additional babel config",
+  "repository": "https://github.com/product-ride/babel-plugin-styled-wind",
+  "contributors": [
+    "Vilva Athiban <vilvaathiban@gmail.com>"
+  ],
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.12.1",
+    "@babel/plugin-syntax-class-properties": "^7.12.1",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.12.1",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-loader": "^8.1.0",
+    "babel-plugin-syntax-jsx": "^6.18.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "babel-test": "^0.2.1",
+    "jest": "^26.1.0",
+    "jest-file-snapshot": "^0.3.6",
+    "prettier": "^2.0.5",
+    "rimraf": "^3.0.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.20",
+    "reduce-css-calc": "^2.1.7"
+  },
+  "resolutions": {
+    "babel-core": "7.0.0-bridge.0"
+  },
+  "scripts": {
+    "clean": "rimraf lib",
+    "style": "prettier --write src/**/*.js",
+    "build": "babel src -d lib",
+    "test": "jest",
+    "test:watch": "npm run test -- --watch",
+    "prepublish": "npm run clean && npm run build"
+  },
+  "keywords": [
+    "styled-components",
+    "css-in-js",
+    "babel-plugin",
+    "styled-wind",
+    "tailwind",
+    "tailwindcss"
+  ],
+  "jest": {
+    "testEnvironment": "node",
+    "snapshotSerializers": [
+      "<rootDir>/test/whitespaceTrimmingSerializer.js"
+    ],
+    "watchPathIgnorePatterns": [
+      "fixtures\\/[^/]+\\/(output|error)\\.js"
+    ]
+  }
+}
