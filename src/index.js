@@ -22,10 +22,10 @@ export default function(babel) {
                     if (css.indexOf('.') > -1 || css.indexOf('swind') > -1) {
                       path.node.value.raw = getHydratedTemplateString([
                         css,
-                      ])[0].join(' \n')
+                      ])[0].map(el => el.indexOf(';') > -1 ? el : `${el};`).join(' \n')
                       path.node.value.cooked = getHydratedTemplateString([
                         path.node.value.cooked,
-                      ])[0].join(' \n')
+                      ])[0].map(el => el.indexOf(';') > -1 ? el : `${el};`).join(' \n')
                     }
                   },
                 },
@@ -40,7 +40,7 @@ export default function(babel) {
               ) {
                 path.node.value = getHydratedTemplateString([
                   className,
-                ])[0].join(' \n')
+                ])[0].map(el => el.indexOf(';') > -1 ? el : `${el};`).join(' \n')
               }
             },
           },
