@@ -23,8 +23,8 @@ export class CSSGen {
                  white-space: nowrap;`,
     'box-border': 'box-sizing: border-box;',
     'box-content': 'box-sizing: content-box;',
-    hidden: 'display: hidden;',
-    block: 'diplay: block;',
+    hidden: 'display: none;',
+    block: 'display: block;',
     inline: 'display: inline;',
     'inline-block': 'display: inline-block;',
     flex: 'display: flex;',
@@ -44,7 +44,7 @@ export class CSSGen {
     relative: 'position: relative;',
     sticky: 'position: sticky;',
     visible: 'visibility: visible;',
-    invisible: 'visibility: invisible;',
+    invisible: 'visibility: hidden;',
     italic: 'font-style: italic;',
     'non-italic': 'font-style: normal;',
     underline: 'text-decoration: underline;',
@@ -278,6 +278,8 @@ export class CSSGen {
     BORDER_RADIUS: /^(rounded$|(rounded-(.*)$)|(rounded-(.*)-(.*)))/,
     BG_OPACITY: /^bg-opacity-[0-9]/,
     BG: /bg-(?!opacity)(.*)/,
+    ZINDEX: /z-(.*)/,
+    CURSOR: /cursor-(.*)/,
   }
 
   dynamicPropertyClasses = Object.values(this.dynamicPropertyClassesRegEx)
@@ -296,7 +298,7 @@ export class CSSGen {
   hydratePropertyValueClasses(className) {
     const styledClassName = CSSGen.getClassName(className)
     const propertyValueClass = this.staticPropertyClasses.find(
-      propertyValueClass => propertyValueClass.test(styledClassName)
+      (propertyValueClass) => propertyValueClass.test(styledClassName)
     )
 
     if (propertyValueClass) {
@@ -309,7 +311,9 @@ export class CSSGen {
         ...valueWithProperty.slice(0, valueWithProperty.length - 1),
       ].join('-')
 
-      return `${allProperties}: ${valueWithProperty[valueWithProperty.length - 1]};`
+      return `${allProperties}: ${
+        valueWithProperty[valueWithProperty.length - 1]
+      };`
     } else {
       return className
     }
@@ -320,7 +324,7 @@ export class CSSGen {
     const styledClassName = CSSGen.getClassName(className)
 
     const dyanmicPopertyClass = this.dynamicPropertyClasses.find(
-      dynamicPropertyClass => dynamicPropertyClass.test(styledClassName)
+      (dynamicPropertyClass) => dynamicPropertyClass.test(styledClassName)
     )
 
     if (dyanmicPopertyClass) {
@@ -696,6 +700,24 @@ export class CSSGen {
         return `
         opacity: ${opacityValue};
         `
+      } else if (
+        styledClassName.match(this.dynamicPropertyClassesRegEx.ZINDEX)
+      ) {
+        const [, zindex] = styledClassName.split('-')
+        const zindexValue = zindex !== 'auto' ? parseInt(zindex) : zindex
+
+        return `
+        z-index: ${zindexValue};
+        `
+      } else if (
+        styledClassName.match(this.dynamicPropertyClassesRegEx.CURSOR)
+      ) {
+        const [, cursor] = styledClassName.split('-')
+        const cursorValue = cursor
+
+        return `
+        cursor: ${cursorValue};
+        `
       }
 
       return className
@@ -860,7 +882,7 @@ export class CSSGen {
         : this.hydrateNormalClasses(classes)
     } else {
       const normalClasses = classes.filter(
-        className => !CSSGen.isPseudoClass(className)
+        (className) => !CSSGen.isPseudoClass(className)
       )
       const pseudoClasses = classes.filter(CSSGen.isPseudoClass)
       const normalCSS = normalClasses
